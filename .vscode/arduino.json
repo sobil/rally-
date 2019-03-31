@@ -1,0 +1,6 @@
+{
+    "board": "arduino:avr:uno",
+    "programmer": "AVRISP mkII",
+    "port": "/dev/cu.usbmodem14101",
+    "sketch": "untitled folder/speedo.ino"
+}
