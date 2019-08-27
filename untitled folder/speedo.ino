@@ -20,15 +20,17 @@ u8g2(U8G2_R0,
 
 int count;
 int cal;
+int cum_places = 2;
+int int_places = 2;
 double cum_rotations = 0;
 double int_rotations = 0;
 int option = 0;
 float cumulative = 0;
 float intermediate = 0;
-char MENU_ITEMS[5][6] = {{'c', 'a', 'l', 'i'},
+char MENU_ITEMS[5][6] = {{'n', 'u', 'l', 'l'},
                          {'n', 'u', 'l', 'l'},
                          {'n', 'u', 'l', 'l'},
-                         {'n', 'u', 'l', 'l'},
+                         {'c', 'a', 'l', 'i'},
                          {'e', 'x', 'i', 't'}};
 int hold;
 char lastkey;
@@ -58,10 +60,9 @@ void reset_counter()
 
 char get_button_pressed()
 {
-  //Serial.println(serialRead);
-  if ((digitalRead(A0) == LOW)) {
+  if ((digitalRead(A1) == LOW)) {
     return 0xB0; // KEY_RETURN;
-  } else if ((digitalRead(A1) == LOW)) {
+  } else if ((digitalRead(A0) == LOW)) {
     return 0xD9; // KEY_DOWN_ARROW;
   } else if ((digitalRead(A2) == LOW)) {
     return 0xDA; // KEY_UP_ARROW;
@@ -77,42 +78,39 @@ void drawBorders(void)
   u8g2.drawFrame(180, 1, 60, 127); // boxC
 }
 
-void boxA(long meters)
+void boxA(float val,int digits)
 {
-  char m_str[6];
-  strcpy(m_str, u8x8_u16toa(meters, 2));
   u8g2.setFont(u8g2_font_logisoso54_tn);
-  u8g2.drawStr(2, 60, m_str);
+  u8g2.setCursor(2,60);
+  u8g2.print(val,digits);
 }
 
-void boxB(long meters)
-{
-  char m_str[6];
-  strcpy(m_str, u8x8_u16toa(meters, 2));
+void boxB(float val,int digits) {
   u8g2.setFont(u8g2_font_logisoso54_tn);
-  u8g2.drawStr(2, 124, m_str);
+  u8g2.setCursor(2,124);
+  u8g2.print(val,digits);
 }
 
 void boxC(char text[5][6], int option)
 {
-  for (int i = 1; i < 6; i++) {
+  for (int i = 0; i < 5; i++) {
     if (i == option) {
       u8g2.setFont(u8g2_font_fub17_tr);
     } else {
       u8g2.setFont(u8g2_font_fur17_tr);
     }
-    u8g2.drawStr(182, i * 20, text[i]);
+    u8g2.drawStr(182, (i+1) * 20, text[i]);
   }
 }
 
 void setup(void)
 {
-  //Serial.begin(9600);
+  // Serial.begin(9600);
   u8g2.begin();
   u8g2.setContrast(10);
   get_stored_cal();
-  //Serial.print("Calibration: ");
-  //Serial.println(cal);
+  // Serial.print("Calibration: ");
+  // Serial.println(cal);
   pinMode(5, INPUT_PULLUP);
   pinMode(A0, INPUT_PULLUP);
   pinMode(A1, INPUT_PULLUP);
@@ -127,8 +125,10 @@ void update_dist()
   reset_counter();
   cum_rotations += TCNT1;
   int_rotations += TCNT1;
-  cumulative = (cum_rotations * cal) / 1000;
-  intermediate = (int_rotations * cal) / 1000;
+  cumulative = (cum_rotations * cal) / 1000000;
+  intermediate = (int_rotations * cal) / 1000000;
+  cum_places = (cumulative >= 100) ? 1 : 2;
+  int_places = (intermediate >= 100) ? 1 : 2;
   if (cumulative >= 999)
     cumulative = 0;
   if (intermediate >= 999)
@@ -137,95 +137,115 @@ void update_dist()
 
 void menu()
 {
-  //Serial.println("In Menu");
-  while (option <= 6) {
+  option = 4;
+  // Serial.println("In Menu");
+  while (option < 6) {
     u8g2.firstPage();
     do {
       drawBorders();
-      boxA(cumulative);
-      boxB(intermediate);
+      boxA(cumulative,cum_places);
+      //boxB(intermediate,int_places);
       boxC(MENU_ITEMS, option);
     } while (u8g2.nextPage());
+    // delay(100);
     char pressed = get_button_pressed();
     switch (pressed) {
-    case char(0xDA): {
-      option++;
-    } break;
     case char(0xD9): {
-      option--;
+      option = (option < 6) ? (option + 1) : option;
+      // option++;
+    } break;
+    case char(0xDA): {
+      option = (option > 0 ) ? (option - 1) : option;
     } break;
     case char(0xB0): // on enter
     {
+      if (lastkey != pressed) {
       switch (option) {
-      case 1:
+      case 3:
         calibration();
         break;
-      case 6:
+      case 4:
         option = 9;
         break;
       default:
         break;
+      }
       }
     }
     default:
       // nothing
       break;
     }
+    lastkey = pressed;
   }
 }
 
 void calibration()
 {
-  char thiskey = get_button_pressed();
-  int increment = 0;
-  if (lastkey == char(0xDA)) // up
+  char thiskey = 'o';
+  delay(200);
+  int increment = 1;
+  while (thiskey != char(0xB0)) { 
+  u8g2.firstPage();
+  do {
+    drawBorders();
+    boxA(cal,0);
+    //boxB(cumulative);
+    //boxC(MENU_ITEMS, option);
+  } while (u8g2.nextPage());
+  thiskey = get_button_pressed();
+  if (thiskey == char(0xDA)) // up
   {
     increment = 1;
-  } else if (lastkey == char(0xD9)) // down
+  } else if (thiskey == char(0xD9)) // down
   {
     increment = -1;
   } else {
-    lastkey = thiskey;
     hold = 0;
     increment = 0;
   }
   if (lastkey == thiskey) {
     hold++;
-    if ((hold == 5) || (hold == 10)) {
-      increment = increment * 10;
+    if (hold > 5) {
+      increment = increment + increment;
     }
   }
-  cal = cal + increment;
-  u8g2.firstPage();
-  while (thiskey != char(0xB0)) {
-    do {
-      drawBorders();
-      boxA(cal);
-      boxB(cumulative);
-      boxC(MENU_ITEMS, option);
-    } while (u8g2.nextPage());
+  else {
+    hold = 0;
   }
+  lastkey = thiskey;
+  cal = cal + increment;
+  delay(300);
+  }
+  set_stored_cal(cal);
 }
 
 void loop(void)
 {
-  delay(1000);
   char thiskey = get_button_pressed();
-  if ((lastkey == thiskey) && (lastkey == char(176))) { // KEY_RETURN
-    //Serial.print("holding");
+  if ((lastkey == thiskey) && (thiskey == char(176))) { // KEY_RETURN
     hold++;
-    if (hold = 5) {
+    if (hold = 10) {
       menu();
     }
+  } 
+  else if (thiskey == char(0xDA)) // up
+  {
+    cum_rotations = 0;
+  } else if (thiskey == char(0xD9)) // down
+  {
+    int_rotations = 0;
   } else {
-    lastkey = thiskey;
     hold = 0;
   }
+  lastkey = thiskey;
   update_dist();
   u8g2.firstPage();
   do {
     drawBorders();
-    boxA(cumulative);
-    boxB(intermediate);
+    boxA(cumulative,cum_places);
+    boxB(intermediate,int_places);
   } while (u8g2.nextPage());
+  cum_rotations++;
+  int_rotations++;
 }
