@@ -1,0 +1,93 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A0 46811 33110
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L MCU_Microchip_ATmega:ATmega2560-16AU U?
+U 1 1 5F11C715
+P 20250 15650
+F 0 "U?" H 20250 12569 50  0000 C CNN
+F 1 "ATmega2560-16AU" H 20250 12660 50  0000 C CNN
+F 2 "Package_QFP:TQFP-100_14x14mm_P0.5mm" H 20250 15650 50  0001 C CIN
+F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-2549-8-bit-AVR-Microcontroller-ATmega640-1280-1281-2560-2561_datasheet.pdf" H 20250 15650 50  0001 C CNN
+	1    20250 15650
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5F12A7BD
+P 22750 10700
+F 0 "R?" H 22809 10746 50  0000 L CNN
+F 1 "R_Small" H 22809 10655 50  0000 L CNN
+F 2 "" H 22750 10700 50  0001 C CNN
+F 3 "~" H 22750 10700 50  0001 C CNN
+	1    22750 10700
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:VSS #PWR?
+U 1 1 5F12E4C1
+P 11700 10600
+F 0 "#PWR?" H 11700 10450 50  0001 C CNN
+F 1 "VSS" H 11715 10773 50  0000 C CNN
+F 2 "" H 11700 10600 50  0001 C CNN
+F 3 "" H 11700 10600 50  0001 C CNN
+	1    11700 10600
+	-1   0    0    1   
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5F12F74E
+P 11400 10600
+F 0 "#PWR?" H 11400 10350 50  0001 C CNN
+F 1 "GND" H 11405 10427 50  0000 C CNN
+F 2 "" H 11400 10600 50  0001 C CNN
+F 3 "" H 11400 10600 50  0001 C CNN
+	1    11400 10600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x30_Female J?
+U 1 1 5F139D20
+P 16150 10600
+F 0 "J?" H 16178 10576 50  0000 L CNN
+F 1 "Conn_01x30_Female" H 16178 10485 50  0000 L CNN
+F 2 "" H 16150 10600 50  0001 C CNN
+F 3 "~" H 16150 10600 50  0001 C CNN
+	1    16150 10600
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR?
+U 1 1 5F13F43D
+P 14100 9500
+F 0 "#PWR?" H 14100 9350 50  0001 C CNN
+F 1 "+5V" H 14115 9673 50  0000 C CNN
+F 2 "" H 14100 9500 50  0001 C CNN
+F 3 "" H 14100 9500 50  0001 C CNN
+	1    14100 9500
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR?
+U 1 1 5F140416
+P 13650 9500
+F 0 "#PWR?" H 13650 9350 50  0001 C CNN
+F 1 "+3.3V" H 13665 9673 50  0000 C CNN
+F 2 "" H 13650 9500 50  0001 C CNN
+F 3 "" H 13650 9500 50  0001 C CNN
+	1    13650 9500
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC

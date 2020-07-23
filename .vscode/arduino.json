@@ -1,6 +1,7 @@
 {
-    "board": "arduino:avr:uno",
+    "board": "arduino:avr:nano",
     "programmer": "AVRISP mkII",
-    "port": "/dev/cu.usbmodem14101",
-    "sketch": "untitled folder/speedo.ino"
+    "port": "/dev/tty.usbserial-1420",
+    "sketch": "untitled folder/speedo.ino",
+    "configuration": "cpu=atmega328old"
 }
