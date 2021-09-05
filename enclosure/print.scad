@@ -16,23 +16,3 @@ module myblock(height,width,depth, standoff_width, standoff_height) {
 
    }
 }
-
-
-
-
-
-
-    
-//    difference() {
- //       
-  //      translate([0,0,size/6]) {
-   //         // convexity is needed for correct preview
-    //        // since characters can be highly concave
-     //       linear_extrude(height=size, convexity=4)
-      //          text(letter, 
-       //              size=size*22/30,
-        //             font="Calibrib",
-         //            halign="center",
-          //           valign="center");
-        //}
-    //}
