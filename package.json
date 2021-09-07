@@ -1,0 +1,24 @@
+{
+  "name": "rally-",
+  "version": "1.0.0",
+  "description": "A Dash/Speedo project for rally",
+  "main": "index.js",
+  "repository": "git@github.com:sobil/rally-.git",
+  "author": "Simon.Pilepich <Simon.Pilepich@kmart.com.au>",
+  "license": "MIT",
+  "scripts": {
+    "render": "ts-node ./scripts/render.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^16.7.10",
+    "ts-node": "^10.2.1",
+    "tslib": "^2.3.1",
+    "typescript": "^4.4.2"
+  },
+  "dependencies": {
+    "@jscad/modeling": "^2.5.0",
+    "@jscad/openscad-openjscad-translator": "^0.0.11",
+    "@jscad/stl-serializer": "^2.0.6",
+    "@types/openjscad": "^0.0.32"
+  }
+}
