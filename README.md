@@ -14,8 +14,8 @@ PRs and issues welcome. I plan to include more hardware details in time.
 
 
 Noteable:
-*LCD:* https://www.buydisplay.com/serial-graphic-module-display-240x128-cog-with-uc1608-controller
-*HALL sensor:* A3144 Sensor https://components101.com/sensors/a3144-hall-effect-sensor
-*CONNECTORS:* JST PH2.0  (2Pin 3Pin 4Pin 5Pin)
-*BUTTONS:* https://www.jaycar.com.au/ip67-rated-dome-pushbutton-switch-black/p/SP0656
+- *LCD:* https://www.buydisplay.com/serial-graphic-module-display-240x128-cog-with-uc1608-controller
+- *HALL sensor:* A3144 Sensor https://components101.com/sensors/a3144-hall-effect-sensor
+- *CONNECTORS:* JST PH2.0  (2Pin 3Pin 4Pin 5Pin)
+- *BUTTONS:* https://www.jaycar.com.au/ip67-rated-dome-pushbutton-switch-black/p/SP0656
 
